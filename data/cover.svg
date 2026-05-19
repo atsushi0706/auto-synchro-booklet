@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1130" preserveAspectRatio="xMidYMid slice" role="img" aria-label="冊子の表紙">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="75%">
+      <stop offset="0%" stop-color="#fdfaf2"/>
+      <stop offset="60%" stop-color="#f7efdf"/>
+      <stop offset="100%" stop-color="#efe3c9"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#caa45a"/>
+      <stop offset="50%" stop-color="#e6cd92"/>
+      <stop offset="100%" stop-color="#b88f44"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.6"/></filter>
+  </defs>
+
+  <rect width="800" height="1130" fill="url(#bg)"/>
+
+  <!-- 意識の波紋: 中心へ収束する同心円 -->
+  <g transform="translate(400 470)" fill="none" filter="url(#soft)">
+    <circle r="300" stroke="#d8c7a6" stroke-width="1" opacity="0.35"/>
+    <circle r="250" stroke="#d3bf99" stroke-width="1" opacity="0.45"/>
+    <circle r="200" stroke="#cdb78c" stroke-width="1.2" opacity="0.55"/>
+    <circle r="150" stroke="#c6ad7d" stroke-width="1.4" opacity="0.65"/>
+    <circle r="104" stroke="#bfa26d" stroke-width="1.6" opacity="0.75"/>
+    <circle r="64"  stroke="#b8975d" stroke-width="1.8" opacity="0.85"/>
+    <circle r="30"  stroke="url(#gold)" stroke-width="2.4" opacity="1"/>
+    <circle r="6" fill="#a9854a" stroke="none"/>
+  </g>
+
+  <!-- 微かな放射(自分へ戻る軸) -->
+  <g transform="translate(400 470)" stroke="#d8c7a6" stroke-width="0.8" opacity="0.25">
+    <line x1="0" y1="-330" x2="0" y2="330"/>
+    <line x1="-330" y1="0" x2="330" y2="0"/>
+    <line x1="-233" y1="-233" x2="233" y2="233"/>
+    <line x1="233" y1="-233" x2="-233" y2="233"/>
+  </g>
+
+  <!-- 二重の金枠 -->
+  <rect x="34" y="34" width="732" height="1062" fill="none" stroke="url(#gold)" stroke-width="2.5"/>
+  <rect x="46" y="46" width="708" height="1038" fill="none" stroke="#d8c7a6" stroke-width="1"/>
+</svg>

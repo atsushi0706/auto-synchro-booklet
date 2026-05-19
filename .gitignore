@@ -1,0 +1,22 @@
+# 秘密情報は絶対にコミットしない
+.env
+.env.*
+.streamlit/secrets.toml
+secrets.toml
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 作業用一時ファイル
+preview_out.txt
+_*.py
+_*.txt
+_*.json
+.tmp-*/
+
+# 実行時に作られる利用回数カウンタ(コミットしない)
+data/.usage.json
