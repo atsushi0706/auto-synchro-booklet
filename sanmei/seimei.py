@@ -15,9 +15,24 @@ import json
 import os
 from dataclasses import dataclass, asdict
 
-_DATA = os.path.join(os.path.dirname(__file__), "..", "data", "kanji_strokes.json")
-with io.open(_DATA, encoding="utf-8") as _f:
-    _KANJI_STROKES: dict[str, int] = json.load(_f)
+_DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                     "..", "data", "kanji_strokes.json")
+_KANJI_STROKES: dict[str, int] | None = None
+
+
+def _kanji_strokes() -> dict[str, int]:
+    """画数テーブルを初回アクセス時にだけ読み込む。
+
+    import 時にファイルI/Oをすると、データ欠落や相対パスのずれで
+    パッケージ全体の import が落ち、アプリが起動不能になる(過去の不具合)。
+    遅延読み込みにして import は必ず成功させ、I/O 失敗は実際に使う時点まで
+    遅らせる。
+    """
+    global _KANJI_STROKES
+    if _KANJI_STROKES is None:
+        with io.open(_DATA, encoding="utf-8") as _f:
+            _KANJI_STROKES = json.load(_f)
+    return _KANJI_STROKES
 
 # かな画数(姓名判断の慣用表)。拗音・促音は基字の画数で数える流派を採用。
 _KANA = {
@@ -42,8 +57,9 @@ _GOGYO_BY_DIGIT = {1: "木", 2: "木", 3: "火", 4: "火", 5: "土",
 
 
 def _char_strokes(ch: str) -> int | None:
-    if ch in _KANJI_STROKES:
-        return _KANJI_STROKES[ch]
+    table = _kanji_strokes()
+    if ch in table:
+        return table[ch]
     if ch in _KANA:
         return _KANA[ch]
     # カタカナ → ひらがな化

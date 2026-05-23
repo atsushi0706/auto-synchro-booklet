@@ -11,13 +11,24 @@ import os
 
 import streamlit as st
 
-from sanmei import build_meishiki, build_seimei
-from prompts.translate import build_profile
-from prompts.chain import generate_booklet
-from prompts.worldview import PRODUCT_NAME, SESSION_NAME
-
-st.set_page_config(page_title=f"{PRODUCT_NAME} 冊子", page_icon="📖",
+# set_page_config は最初の Streamlit 命令である必要があるため、
+# プロジェクト側 import より前に呼ぶ。
+st.set_page_config(page_title="あなた専用の冊子", page_icon="📖",
                    layout="centered")
+
+# プロジェクトモジュールの import を保護する。万一どこかが落ちても、
+# お客さんに赤い traceback を見せず「準備中」の画面で止める
+# (壊れた状態がキャッシュ固定されるのを防ぐ)。
+try:
+    from sanmei import build_meishiki, build_seimei
+    from prompts.translate import build_profile
+    from prompts.chain import generate_booklet
+    from prompts.worldview import PRODUCT_NAME, SESSION_NAME
+except Exception:
+    st.error("ただいまシステムの準備中です。お手数ですが、少し時間をおいて"
+             "ページを再読み込みのうえ、再度お試しください。")
+    st.caption("(何度も表示される場合は、お手数ですが運営者までお知らせください)")
+    st.stop()
 
 # Streamlit Cloud は秘密情報を st.secrets に入れる(os.getenv には来ない)。
 # ローカルは環境変数。両対応のため st.secrets を環境変数へ橋渡しする。
